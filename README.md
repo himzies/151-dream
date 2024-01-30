@@ -4,9 +4,9 @@ first attempt at web scraping
 ## motivations
 i am a huge pokemon fan and i like collecting pokemon cards! in 2023, japan released a new pokemon card set for the original 151 pokemon, which became a very popular set of cards for collectors like me. the reason for it's popularity is because normally, one card only has two version: one non-foil and one foiled.
 
-[non-foil](https://github.com/himzies/151-dream/blob/main/images/charmander_non-foil.jpg?raw=true)
-[normal foil](https://github.com/himzies/151-dream/blob/main/images/charmander_pokeball.jpg?raw=true)
-[masterball foil](https://github.com/himzies/151-dream/blob/main/images/charmander_masterball.jpg?raw=true)
+![non-foil](https://github.com/himzies/151-dream/blob/main/images/charmander_non-foil.jpg?raw=true)
+![normal foil](https://github.com/himzies/151-dream/blob/main/images/charmander_pokeball.jpg?raw=true)
+![masterball foil](https://github.com/himzies/151-dream/blob/main/images/charmander_masterball.jpg?raw=true)
 
 for this new set, the (crazy/lucrative) japanese people decided to add a new foiled version with masterball prints in the background. to make matters worst, there exists **only** one masterball card in an entire booster box. if you think that is bad, wait till you hear this... the msrp is around sgd$60 but it is marked up to around **sgd$200** due to its popularity and being out of stock everywhere. it is clear that if i would like to collect everything, i would have to buy them singly instead of purchasing an entire booster box just to get one, which could be a duplicate.
 
