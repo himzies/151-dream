@@ -1,22 +1,23 @@
-import pandas as pd
-import requests
-import re
+import os
 
-from bs4 import BeautifulSoup
+from datetime import date
+from src.card_info import get_card_info, get_price_stat
+from src.constants import Constants
 
-page = requests.get('https://yuyu-tei.jp/sell/poc/s/sv02a')
-
-soup = BeautifulSoup(page.content, 'html.parser')
-
-all_card_info = soup.findAll('div', attrs={'class': re.compile('card-product position-relative mt-4*')})
-
-card_nps = {}
-for card_info in all_card_info:
-    card_name = card_info.find('h4').text.strip()
-    card_price = card_info.find('strong').text.strip()
-    card_status = card_info.find('label').text
-    card_status = card_status.replace('\n', '')
-    card_status = card_status.replace(' ', '')
-    card_nps[card_name] = {'price': card_price, 'status': card_status}
-
-print(card_nps)
+if __name__ == '__main__':
+    function = input('what would you like to do today? (pc - price check/pt - price track): ')
+    game = input('what game? (ws - weiss schwarz/poc - pokemon): ')
+    set = input('which set does it belong to? ')
+    today = date.today()
+    filepath = f'data/{str(today)/{game}/{set}.csv}'
+    if function == 'pt':
+        if os.path.isfile(filepath):
+            print(f'price track already done for {set} today')
+        else:
+            os.makedirs(filepath)
+            get_card_info(game, set).to_csv(filepath)
+    elif function == 'pc':
+        if os.path.isfile(filepath):
+            card_name = input('what is the name of the card? ')
+            price_stat = get_price_stat(card_name, filepath)
+            print(f'{card_name} costs {price_stat[0]}, {price_stat[1]}')
