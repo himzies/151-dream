@@ -18,7 +18,8 @@ if __name__ == '__main__':
         else:
             get_card_info(game, set).to_csv(filepath)
     elif function == 'pc':
-        if os.path.isfile(filepath):
-            card_num = input('what is the number at the bottom of the card? ')
-            price_stat = get_price_stat(game, set, card_num, filepath)
-            print(f'{price_stat[0]} ({price_stat[1]}) costs {price_stat[2]}, {price_stat[3]}')
+        card_num = str(input('what is the number at the bottom of the card? '))
+        if not os.path.isfile(filepath):
+            get_card_info(game, set).to_csv(filepath)
+        price_stat = get_price_stat(set, card_num, filepath)
+        print(f'{price_stat[1]} ({price_stat[2]}) costs {price_stat[3]}, {price_stat[4]}')
