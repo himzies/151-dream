@@ -50,3 +50,42 @@ def dream_function(card, option):
         return card.iloc[[1]]
     else:
         return card.iloc[[2]]
+    
+
+def get_set_links(game):
+
+    result = {}
+
+    if game == 'poc':
+
+        page = requests.get(f'https://yuyu-tei.jp/top/poc')
+
+        soup = BeautifulSoup(page.content, 'html.parser')
+
+        set_sections = soup.find('div', attrs={'id': 'side-sell-target-12'})
+
+        all_links = set_sections.findAll('button', attrs={'id': re.compile(f'side-sell-*')})
+
+        for links in all_links:
+            link = links['onclick'].split("'")[1]
+            set_name = links.text.replace('\n', '').lstrip()
+            set_code = link.replace('https://yuyu-tei.jp/sell/poc/s/', '')
+            result[set_code] = {'set_name': set_name, 'link': link}
+
+    elif game == 'ws':
+
+        page = requests.get(f'https://yuyu-tei.jp/top/ws')
+
+        soup = BeautifulSoup(page.content, 'html.parser')
+
+        set_sections = soup.find('div', attrs={'id': 'side-sell-target-12'})
+
+        all_links = set_sections.findAll('a', attrs={'id': re.compile(f'side-sell-*')})
+
+        for links in all_links:
+            link = links['href']
+            set_name = links.text.replace('\n', '').lstrip()
+            set_code = link.replace('https://yuyu-tei.jp/sell/ws/s/', '')
+            result[set_code] = {'set_name': set_name, 'link': link}
+    
+    return result
