@@ -9,6 +9,9 @@ from datetime import date
 
 def get_set_info(game, set, date):
 
+    if not os.path.exists(f'data/{game}/{str(date)}/sets'):
+        os.makedirs(f'data/{game}/{str(date)}/sets')
+
     page = requests.get(f'https://yuyu-tei.jp/sell/{game}/s/{set}')
 
     soup = BeautifulSoup(page.content, 'html.parser')
@@ -29,7 +32,7 @@ def get_set_info(game, set, date):
         new_row = pd.DataFrame({'card_name': [card_name], 'card_num': [card_num], 'price': [card_price], 'status': [card_status]})
         result = pd.concat([result, new_row])
     
-    result.to_csv(f'data/{game}/{str(date)}/{set}.csv')
+    result.to_csv(f'data/{game}/{str(date)}/sets/{set}.csv')
 
     return result
 
@@ -41,7 +44,8 @@ def get_price_stat(game, set, card_num, date):
     card = data[data['card_num'] == card_num]
 
     if set == 'sv02a' and len(card.index) > 1:
-        option = input('which version? (n - normal/pb - pokeball/mb - masterball) ')
+        # option = input('which version? (n - normal/pb - pokeball/mb - masterball) ')
+        option = 'mb'
         card = dream_function(card, option)
 
     return card.values.flatten().tolist()
