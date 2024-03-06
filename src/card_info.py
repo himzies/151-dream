@@ -12,7 +12,10 @@ def get_set_info(game, set, date):
     if not os.path.exists(f'data/{game}/{str(date)}/sets'):
         os.makedirs(f'data/{game}/{str(date)}/sets')
 
-    page = requests.get(f'https://yuyu-tei.jp/sell/{game}/s/{set}')
+    if set in ['bag', 'set', 'deck']:
+        return
+    else:
+        page = requests.get(f'https://yuyu-tei.jp/sell/{game}/s/{set}')
 
     soup = BeautifulSoup(page.content, 'html.parser')
 
@@ -21,6 +24,8 @@ def get_set_info(game, set, date):
     result = pd.DataFrame({'card_name': [], 'card_num': [], 'price': [], 'status': []})
 
     for card_info in all_card_info:
+        if card_info.find('span') == None:
+            continue
         card_num = card_info.find('span').text.strip().upper()
         card_name = card_info.find('h4').text.strip()
         card_price = card_info.find('strong').text.strip()
