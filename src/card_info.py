@@ -71,14 +71,16 @@ def get_pkmn_links(date):
 
     soup = BeautifulSoup(page.content, 'html.parser')
 
-    set_sections = soup.find('div', attrs={'id': 'side-sell-target-12'})
-
-    all_links = set_sections.findAll('button', attrs={'id': re.compile(f'side-sell-*')})
+    all_links = soup.findAll('button', attrs={'id': re.compile(f'side-sell-*')})
 
     for links in all_links:
         link = links['onclick'].split("'")[1].strip()
         set_name = links.text.strip()
         set_code = link.replace('https://yuyu-tei.jp/sell/poc/s/', '')
+        set_code = set_code.replace('https://yuyu-tei.jp/sell/poc/m/', '')
+        set_code = set_code.replace('#newest', '')
+        if set_code in result['set_code']:
+            continue
         new_row = pd.DataFrame({'set_code': [set_code], 'set_name': [set_name], 'set_link': [link]})
         result = pd.concat([result, new_row])
     

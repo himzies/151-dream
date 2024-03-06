@@ -14,7 +14,7 @@ if __name__ == '__main__':
     if not os.path.isfile(f'data/ws/{str(today)}/ws_links.csv'):
         ws_links = get_ws_links(today)
     else:
-        ws_links =pd.read_csv(f'data/ws/{str(today)}/ws_links.csv')
+        ws_links = pd.read_csv(f'data/ws/{str(today)}/ws_links.csv')
     poc_sets = pkmn_links.set_code
     ws_sets = ws_links.set_code
     for set in poc_sets:
